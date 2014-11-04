@@ -1,17 +1,44 @@
-if (Meteor.isClient) {
-  // counter starts at 0
-  Session.setDefault("counter", 0);
+Chats = new Mongo.Collection("chats");
 
-  Template.hello.helpers({
-    counter: function () {
-      return Session.get("counter");
+if (Meteor.isClient) {
+  var notInChat = "None";
+  var anon = "anonymous";
+  Session.set("currentChat", notInChat);
+  Session.set("user", anon);
+  Template.body.events({
+    "submit .new-chat": function(event){
+
+      var text = event.target.text.value;
+
+      Chats.insert({
+        name: text,
+        createdAt: new Date(),
+        people: Session.get("user")
+      });
+
+      // Clear form
+      event.target.text.value = "";
+
+      // Prevent default form submit
+      return false;
     }
   });
 
-  Template.hello.events({
-    'click button': function () {
-      // increment the counter when button is clicked
-      Session.set("counter", Session.get("counter") + 1);
+  Template.chat.helpers({
+    currentChat: function() {
+      return Session.get("currentChat");
+    }
+  })
+
+  Template.body.helpers({
+    avalableChats: function() {
+      return Chats.find({});
+    },
+    chatCount: function() {
+      return Chats.find({}).count();
+    },
+    inChat: function(){
+      return notInChat !== Session.get("currentChat");
     }
   });
 }

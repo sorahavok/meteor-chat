@@ -1,14 +1,29 @@
 <head>
-  <title>meteor-chat2</title>
+  <title>meteor-chat</title>
 </head>
 
 <body>
-  <h1>Welcome to Meteor!</h1>
+  <h1>Welcome to Chat!</h1>
+  <h2>Avalable Chats - {{chatCount}}</h2>
+  <ul>
+  {{#each avalableChats}}
+    {{> avalableChat}}
+  {{/each}}
+  </ul>
+  <form class="new-chat">
+    <input class="text" name="text" required autofocus pattern="[A-Za-z0-9- ]{2,30}" placeholder="Create New Chat" />
+  </form>
 
-  {{> hello}}
+  {{#if inChat}}
+    {{> chat}}
+  {{/if}}
 </body>
 
-<template name="hello">
-  <button>Click Me</button>
-  <p>You've pressed the button {{counter}} times.</p>
+<template name="avalableChat">
+  <li>{{name}} - {{createdAt}}</li>
+</template>
+
+<template name="chat">
+  <h3>Current Chat - {{currentChat}}</h3>
+  <p>People in chat {{people}}</p>
 </template>
