@@ -6,8 +6,8 @@
   <h1>Welcome to Chat!</h1>
   <h2>Avalable Chats - {{chatCount}}</h2>
   <ul>
-  {{#each avalableChats}}
-    {{> avalableChat}}
+  {{#each availableChats}}
+    {{> availableChat}}
   {{/each}}
   </ul>
   <form class="new-chat">
@@ -19,8 +19,8 @@
   {{/if}}
 </body>
 
-<template name="avalableChat">
-  <li>{{name}} - {{createdAt}}</li>
+<template name="availableChat">
+  <li><button class="enter">Enter</button>{{name}} - {{createdAt}}</li>
 </template>
 
 <template name="chat">

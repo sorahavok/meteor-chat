@@ -13,7 +13,7 @@ if (Meteor.isClient) {
       Chats.insert({
         name: text,
         createdAt: new Date(),
-        people: Session.get("user")
+        people: [Session.get("user")]
       });
 
       // Clear form
@@ -21,6 +21,18 @@ if (Meteor.isClient) {
 
       // Prevent default form submit
       return false;
+    }
+  });
+
+  Template.availableChat.events({
+    "click .enter": function(){
+      var prevChat = Session.get("currentChat");
+      if(prevChat !== "None") {
+        var prev = Chats.findOne({name:prevChat});
+        Chats.update(prev._id, { $pull: {people: Session.get("user")}});
+      }
+      Session.set("currentChat", this.name);
+      Chats.update(this._id, { $push: {people: Session.get("user")}});
     }
   });
 
