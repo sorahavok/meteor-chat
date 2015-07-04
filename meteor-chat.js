@@ -4,10 +4,8 @@ ChatLog = new Mongo.Collection("chatlog");
 if (Meteor.isClient) {
   // Setup Code
   var notInChat = "None";
-  var user = "anonymous";
 
   Session.set("currentChat", notInChat);
-  Session.set("user", user);
   
   // Events
   Template.body.events({
@@ -92,11 +90,16 @@ if (Meteor.isClient) {
 
     ChatLog.insert({
       text: chatInput.value,
-      user: Session.get("user"),
+      user: getUserName(),
       chat: Session.get("currentChat").name,
       createdAt: new Date(),
     });
     chatInput.value = "";
+  };
+
+  var getUserName = function() {
+    user = Meteor.user();
+    return user == null ? "anonymous" : user.username;
   };
 
   Accounts.ui.config({
