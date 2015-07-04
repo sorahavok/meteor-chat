@@ -44,7 +44,11 @@
 
 <template name="chat">
   <h2>Current Chat - {{currentChat}}</h2>
-  <p>People in chat {{peopleInChat}}</p>
+  <h4>People in chat</h4>
+    {{#each peopleInChat}}
+      <p>{{name}}</p>
+    {{/each}}
+
   {{#each chatEntries}}
   {{> chatEntry}}
   {{/each}}

@@ -75,7 +75,9 @@ if (Meteor.isClient) {
       return ChatLog.find({"chat": Session.get("currentChat").name});
     },
     peopleInChat: function() {
-      return Session.get("currentChat").people.length;
+      return Session.get("currentChat").people.map(function(person){
+        return {name: person}
+      });
     },
   });
 
