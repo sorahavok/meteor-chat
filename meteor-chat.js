@@ -72,9 +72,15 @@ if (Meteor.isClient) {
     },
   });
 
+  Template.avalableChat.helpers({
+    createTime: function() {
+      return this.createdAt.toLocaleDateString() + ' ' + this.createdAt.toLocaleTimeString();
+    },
+  });
+
   Template.chatEntry.helpers({
     createTime: function() {
-      return this.createdAt.toLocaleTimeString()
+      return this.createdAt.toLocaleTimeString();
     },
   });
 
