@@ -1,9 +1,13 @@
 <head>
   <title>meteor-chat</title>
+  <link href="css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body>
-  <h1>Welcome to Chat!</h1>
+  <header>
+    <h1>Welcome to Chat!</h1>
+  </header>
+  <div class="container">
   <h2>Avalable Chats - {{chatCount}}</h2>
   <ul>
   {{#each avalableChats}}
@@ -17,6 +21,12 @@
   {{#if inChat}}
     {{> chat}}
   {{/if}}
+  
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+  <script src="js/bootstrap.min.js"></script>
 </body>
 
 <template name="avalableChat">
@@ -26,5 +36,14 @@
 <template name="chat">
   <h3>Current Chat - {{currentChat}}</h3>
   <p>People in chat {{peopleInChat}}</p>
+  {{#each chatEntries}}
+    {{> chatEntry}}
+  {{/each}}
+  <input id="chatInput" class="text" name="text" autofocus placeholder="Say Something" />
+  <img class="sendImg" src="http://www.google.com/help/hc/images/android/android_ug_40/ic_send_holo_light.png" />
+  
 </template>
 
+<template name="chatEntry">
+  <p>{{user}}: {{text}} @ {{createTime}}</p>
+</template>
