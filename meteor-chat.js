@@ -88,21 +88,24 @@ if (Meteor.isClient) {
   });
 
   var insertNewChat = function() {
-      chatInput = $('#chatInput')[0];
+    chatInput = $('#chatInput')[0];
 
-      ChatLog.insert({
-        text: chatInput.value,
-        user: Session.get("user"),
-        chat: Session.get("currentChat").name,
-        createdAt: new Date(),
-      });
-      // Clear form
-      chatInput.value = "";
-    };
-}
+    ChatLog.insert({
+      text: chatInput.value,
+      user: Session.get("user"),
+      chat: Session.get("currentChat").name,
+      createdAt: new Date(),
+    });
+    chatInput.value = "";
+  };
 
-if (Meteor.isServer) {
-  Meteor.startup(function () {
-    // code to run on server at startup
+  Accounts.ui.config({
+    passwordSignupFields: "USERNAME_ONLY"
   });
 }
+
+  if (Meteor.isServer) {
+    Meteor.startup(function () {
+    // code to run on server at startup
+  });
+  }
