@@ -27,8 +27,17 @@ if (Meteor.isClient) {
     },
 
     "click .chat-item": function(event) {
-      currChat = Chats.findOne({"name": event.target.innerText});
-      currChat.people.push(user)
+      var currentChat = Session.get("currentChat");
+      if(currentChat != notInChat && currentChat != undefined) {
+        var chat = Chats.findOne(currentChat._id);
+        var chatIndex = chat != notInChat ? chat.people.indexOf(getUserName()) : -1;
+        if(chatIndex > -1) {
+          chat.people.splice(chatIndex, 1);
+        }
+      }
+
+      var currChat = Chats.findOne({"name": event.target.innerText});
+      currChat.people.push(getUserName())
       Session.set("currentChat", currChat);
     },
   });
