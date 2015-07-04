@@ -1,18 +1,22 @@
 Chats = new Mongo.Collection("chats");
+ChatLog = new Mongo.Collection("chatlog");
 
 if (Meteor.isClient) {
+  // Setup Code
   var notInChat = "None";
-  var anon = "anonymous";
+  var user = "anonymous";
 
-  Session.set("currentChat", currChat);
-  Session.set("user", anon);
+  Session.set("currentChat", notInChat);
+  Session.set("user", user);
+  
+  // Events
   Template.body.events({
-    "submit .new-chat": function(event){
+    "submit .new-chat": function(){
 
-      var text = event.target.text.value;
+      var name = event.target.text.value;
 
       Chats.insert({
-        name: text,
+        name: name,
         createdAt: new Date(),
         people: [],
       });
@@ -26,11 +30,24 @@ if (Meteor.isClient) {
 
     "click .chat-item": function(event) {
       currChat = Chats.findOne({"name": event.target.innerText});
-      currChat.people.push(anon)
+      currChat.people.push(user)
       Session.set("currentChat", currChat);
-    }
+    },
   });
 
+  Template.chat.events({
+    "click .sendImg": function(event) {
+      insertNewChat();
+    }, 
+
+    "keyup #chatInput" : function(event) {
+      if(event.keyCode == 13) {
+        insertNewChat();
+      }
+    },
+  });
+
+  // Helpers
   Template.body.helpers({
     avalableChats: function() {
       return Chats.find({});
@@ -40,20 +57,39 @@ if (Meteor.isClient) {
     },
     inChat: function(){
       return notInChat !== Session.get("currentChat");
-    }
+    },
   });
 
   Template.chat.helpers({
     currentChat: function() {
       return Session.get("currentChat").name;
     },
-    chatlog: function() {
-      return ChatLog.find({"name": Session.get("currentChat").name});
+    chatEntries: function() {
+      return ChatLog.find({"chat": Session.get("currentChat").name});
     },
     peopleInChat: function() {
       return Session.get("currentChat").people.length;
-    }
+    },
   });
+
+  Template.chatEntry.helpers({
+    createTime: function() {
+      return this.createdAt.toLocaleTimeString()
+    },
+  });
+
+  var insertNewChat = function() {
+      chatInput = $('#chatInput')[0];
+
+      ChatLog.insert({
+        text: chatInput.value,
+        user: Session.get("user"),
+        chat: Session.get("currentChat").name,
+        createdAt: new Date(),
+      });
+      // Clear form
+      chatInput.value = "";
+    };
 }
 
 if (Meteor.isServer) {
