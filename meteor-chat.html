@@ -1,27 +1,34 @@
 <head>
   <title>meteor-chat</title>
   <link href="css/bootstrap.min.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
 <body>
+  <div class="bg-primary">
   <header>
     <h1>Welcome to Chat!</h1>
   </header>
+</div>
   <div class="container">
-  <h2>Avalable Chats - {{chatCount}}</h2>
-  <ul>
-  {{#each avalableChats}}
-    {{> avalableChat}}
-  {{/each}}
-  </ul>
-  <form class="new-chat">
-    <input class="text" name="text" required autofocus pattern="[A-Za-z0-9- ]{2,30}" placeholder="Create New Chat" />
-  </form>
-
-  {{#if inChat}}
-    {{> chat}}
-  {{/if}}
-  
+    <div class="row">
+    <div class="col-sm-5">
+      <h2>Avalable Chats - {{chatCount}}</h2>
+      <ul class="list-unstyled">
+        {{#each avalableChats}}
+        {{> avalableChat}}
+        {{/each}}
+      </ul>
+      <form class="new-chat">
+        <input type="text" class="form-control" name="text" required autofocus pattern="[A-Za-z0-9- ]{2,30}" placeholder="Create New Chat" />
+      </form>
+    </div>
+    <div class="col-sm-7">
+      {{#if inChat}}
+        {{> chat}}
+      {{/if}}
+    </div>
+  </div>
   </div>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -30,21 +37,20 @@
 </body>
 
 <template name="avalableChat">
-  <li><span class="chat-item">{{name}}</span> - {{createdAt}}</li>
   <li><h5><span class="chat-item">{{name}}</span> <small class="text-muted">{{createTime}}</small></h5></li>
 </template>
 
 <template name="chat">
-  <h3>Current Chat - {{currentChat}}</h3>
+  <h2>Current Chat - {{currentChat}}</h2>
   <p>People in chat {{peopleInChat}}</p>
   {{#each chatEntries}}
-    {{> chatEntry}}
+  {{> chatEntry}}
   {{/each}}
-  <input id="chatInput" class="text" name="text" autofocus placeholder="Say Something" />
+  <input type="text" id="chatInput" class="text" name="text" autofocus placeholder="Say Something" />
   <img class="sendImg" src="http://www.google.com/help/hc/images/android/android_ug_40/ic_send_holo_light.png" />
   
 </template>
 
 <template name="chatEntry">
-  <p>{{user}}: {{text}} @ {{createTime}}</p>
+  <p>{{user}}: {{text}} <small class="text-muted">{{createTime}}</small></p>
 </template>
