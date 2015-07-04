@@ -7,7 +7,7 @@
 <body>
   <div class="bg-primary">
   <header>
-    <h1>Welcome to Chat!</h1>
+    <h1 style="margin-top:0; padding: 25px">Welcome to Chat!</h1>
   </header>
 </div>
   <div class="container">
@@ -52,5 +52,5 @@
 </template>
 
 <template name="chatEntry">
-  <p>{{user}}: {{text}} <small class="text-muted">{{createTime}}</small></p>
+  <p><span class="bg-primary numberCircle">{{userLetter}}</span> {{text}} <small class="text-muted">{{createTime}}</small></p>
 </template>

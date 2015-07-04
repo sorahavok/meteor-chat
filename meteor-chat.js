@@ -82,6 +82,9 @@ if (Meteor.isClient) {
     createTime: function() {
       return this.createdAt.toLocaleTimeString();
     },
+    userLetter: function() {
+      return this.user[0].toUpperCase();
+    },
   });
 
   var insertNewChat = function() {

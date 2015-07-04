@@ -1,14 +1,11 @@
 /* CSS declarations go here */
-.new-chat input {
-  box-sizing: border-box;
-  padding: 10px 0;
-  background: transparent;
-  border: none;
-  width: 100%;
-  padding-right: 80px;
-  font-size: 1em;
-}
+.numberCircle {
+    border-radius: 30%;
 
-.new-chat input:focus{
-  outline: 0;
+    padding: 6px;
+
+    color: #fff;
+    text-align: center;
+
+    font: 14px Arial, sans-serif;
 }
